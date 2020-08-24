@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="clientApp">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>CRUD Angular 1.8.0</title>
+	<link rel='stylesheet' href='node_modules/bulma/css/bulma.min.css' type='text/css' media='all' />
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js?v=1"></script>
+
+    <script>
+
+        app.service('lclStorage', function() {
+            this.getClients = function () {
+                var clients = window.localStorage.getItem('clients')
+                if(clients != null){
+                    return JSON.parse(window.localStorage.getItem('clients'));
+                }else{
+                    return null;
+                }
+            }
+
+            this.delete = function(index){
+                var clients = this.getClients();
+                clients.splice(index,1);
+                window.localStorage.setItem('clients', angular.toJson(clients));
+                return clients;
+            }
+
+            this.add = function(client){
+                var clients = this.getClients();
+                if(clients == null){
+                    clients = [];
+                }
+                
+                clients.push(client);  
+                window.localStorage.setItem('clients', angular.toJson(clients));
+                return clients;
+            }
+
+            this.update = function(client,index){
+                var clients = this.getClients();
+
+
+                clients[index] = client;
+                window.localStorage.setItem('clients',  angular.toJson(clients));
+                return clients;
+            }
+        });
+
+        function openAddModal(){
+            $('#modalAdd').addClass("is-active");
+        }
+        function closeModal(){
+            $('.modal').removeClass("is-active");   
+        }
+    </script>
+
+    <script src="client-list/client-list.module.js"></script>
+    <script src="client-list/client-list.component.js"></script>
+
+</head>
+
+<body>
+    <client-list></client-list>
+</body>
+</html>

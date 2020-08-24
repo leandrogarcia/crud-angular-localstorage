@@ -1,0 +1,8 @@
+{
+  "name": "angular-crud",
+  "dependencies": {
+    "angular": "1.8.x",
+    "bulma": "0.9.0",
+    "jquery": "^3.5.1"
+  }
+}
